@@ -1,0 +1,38 @@
+name: Despliegue Proyecto Web
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: Pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: GitHub-Pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Revisar checkout
+        uses: actions/checkout@v4
+
+      - name: Instalar Pages
+        uses: actions/configure-pages@v5
+
+      - name: Cargar Página
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Ajusta la ruta del directorio de artefactos según tu proyecto
+          path: '.'
+
+      - name: Desplegar a GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

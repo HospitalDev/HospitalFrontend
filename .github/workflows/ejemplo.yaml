@@ -1,0 +1,16 @@
+name: Revisar Proyecto Web
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["main"]
+
+jobs:
+  primer_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Revisar archivos antes
+        run: ls
+
+      - name: Revisar checkout
+        uses: actions/checkout@v4  # Cambia `run:` por `uses:`
